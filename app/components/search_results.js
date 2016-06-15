@@ -6,12 +6,12 @@ const List = (props) => {
  
 
   const AlbumList = props.albums.map((v,i) => {
-    if(v.image[1]['#text']){
+    if(v.images&&v.images[1]){
       return (
         <Album key={i} 
              album={v.name}
-             artist={v.artist}
-             img={v.image[2]['#text']}
+             artist={props.query.toUpperCase()}
+             img={v.images[1].url}
              onAlbumSelect={props.onAlbumSelect}/>
       );
     }

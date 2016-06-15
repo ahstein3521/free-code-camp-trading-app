@@ -42,7 +42,7 @@ import Album from './album_selected'
           <label for='text'>Find a new album:</label>
           <input
             type='text'
-            placeholder="Search For Albums By Title..."
+            placeholder="Search For Albums"
             className="form-control"
             onChange={this.handleOnChange}
             value={this.state.term}/>

@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 
-require('../secret')
+// require('../secret')
 
 const ROOT_URL='https://record-server.herokuapp.com'
-const Key=process.env.KEY
+const SPOTIFY_URL='https://api.spotify.com/v1/search?';
 
 export function findAlbum(query){	
-	const request=axios.get(`http://ws.audioscrobbler.com/2.0/?method=album.search&album=${query}&api_key=${Key}&format=json`)
+	const request=axios.get(`${SPOTIFY_URL}q=artist:${query}&type=album`);
 	return {type:'FIND_ALBUM',payload:request}	
 }
 
