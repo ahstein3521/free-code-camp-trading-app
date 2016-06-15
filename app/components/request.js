@@ -3,12 +3,7 @@ import Album from './album';
 
 
 const List = (props) => {
-  
-  if(!props.albums.length){
-    return <div className='jumbotron'><h2>Nothing to See Here</h2></div>
-  }
-  
-  
+ 
    const AlbumList = props.albums.map((v,i) => {
       let button=props.onConfirm? <button className='btn-primary' onClick={()=>props.onConfirm(v)}>Confirm</button>:<p></p>
       return (

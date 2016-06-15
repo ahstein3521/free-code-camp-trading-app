@@ -18,17 +18,15 @@ const List = (props) => {
   });
 
   return (
-   <div className='search-results'> 
-   <div className='results-header'>
-    <p></p>
-    <h3>`Top Results For "${props.query}"`</h3>
-    <button onClick={()=>props.clearResults()}>X</button>
-    </div>
-    <hr/>
-    <div className="row ">
-      {AlbumList}
-    </div>
-   </div> 
+    <div className='search-results'> 
+      <div className='results-header'>
+        <h3>{"Top Results For "+ props.query}</h3>
+        <button onClick={()=>props.clearResults()}>X</button>
+      </div>
+      <div className="row ">
+        {AlbumList}
+      </div>
+    </div> 
   );
 };
 

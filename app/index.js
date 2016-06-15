@@ -8,12 +8,12 @@ import thunk from 'redux-thunk'
 
 import App from './components/app';
 import Home from './components/home';
-import StoreFront from './components/store_front'
-import Profile from './components/profile'
-import SignUp from './components/signup'
-import SignIn from './components/signin'
-import Auth from './components/auth'
-import Settings from './components/update_form'
+import StoreFront from './components/store_front';
+import Profile from './components/profile';
+import SignUp from './components/signup';
+import SignIn from './components/signin';
+import Auth from './components/auth';
+import Settings from './components/update_form';
 import reducers from './reducers';
 
 
@@ -44,7 +44,7 @@ ReactDOM.render(
   , document.querySelector('.app'));
 
 /**************************************************
-
+todo:
 When a trade is confirmed, each of the two records traded need to be removed from any other users profile if it is 
 a pending trade
 

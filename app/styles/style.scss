@@ -1,7 +1,7 @@
 body{
 	background:#673AB7;
 	overflow:hidden;
-}
+	}
 
 @mixin BUTTON($bg,$color,$margin){
 	background:$bg;
@@ -27,7 +27,6 @@ body{
 		list-style:none;
 		align-items:center;
 		width:80%;
-
 		margin:0 auto;
 	}
 	.btn1{
@@ -64,7 +63,9 @@ body{
 	text-align:left;
 	}
 }
-
+.thumbnail{
+	cursor:pointer;
+}
 .library-container{
   width:80%;
   padding-top:20px;
@@ -82,16 +83,16 @@ img{
 	display:flex;
 	flex-direction:column;
 	align-items:center;
-  position:absolute;
-  width:100%;
-  height:100%;
-  left:0px;
-  top:-10px;
-  font-size:1rem;
-  color:black;
-  background:white;
-  text-align:center;
-  opacity:0;
+	position:absolute;
+	width:100%;
+	height:100%;
+	left:0px;
+	top:-10px;
+	font-size:1rem;
+	color:black;
+	background:white;
+	text-align:center;
+	opacity:0;
   	&:hover{
   		opacity:.9;
   		p{
@@ -100,11 +101,10 @@ img{
   	}
   
 }
-.profile{
-	h6{
+.profile h6{
 	margin-top:20px;
-	}
 }
+
 .form-inline{
 	width:70%;
 	outline:none;
@@ -125,7 +125,9 @@ img{
 	padding:5px;
 	top:0px;
 	left:0px;
-	
+	height:700px;
+	overflow-y:scroll;
+
 	
 	.results-header{
 		display:flex;

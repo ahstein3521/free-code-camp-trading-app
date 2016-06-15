@@ -4,8 +4,12 @@ import * as actions from '../actions';
 import { Link } from 'react-router';
 
  class Update extends Component {
-  handleFormSubmit(formProps) {
-    this.props.updateUser(this.props.user.name,formProps);
+  handleFormSubmit({location,displayName}) {
+    const user=this.props.auth.user;
+    user.user.displayName=displayName;
+    user.user.location=location;
+    const info={location,displayName}
+    this.props.updateUser(this.props.auth.user.user.name,user,info);
   }
 
   render() {
@@ -16,11 +20,11 @@ import { Link } from 'react-router';
           <h2>Your Info</h2>
            <fieldset className="form-group">
             <label>Name:</label>
-            <input {...displayName} type='text' className="form-control" placeholder={this.props.user.displayName} required/>
+            <input {...displayName} type='text' className="form-control" placeholder={this.props.user} required/>
           </fieldset>
           <fieldset className="form-group">
             <label>Location:</label>
-            <input {...location} type='text' className="form-control" placeholder={this.props.user.location} required/>
+            <input {...location} type='text' className="form-control" placeholder={this.props.location} required/>
           </fieldset>
           <fieldset className='signin-btn'>
             <button action="submit" className="btn">Update</button>
@@ -33,9 +37,10 @@ import { Link } from 'react-router';
   }
 }
 
-function mapStateToProps(state) {
-// console.log(state)
-  return { errorMessage: state.auth.error, user:state.user };
+function mapStateToProps({auth}) {
+  let user=auth.authenticated? auth.user.user.displayName:null;
+  let location=auth.authenticated? auth.user.user.location:null; 
+  return { errorMessage: auth.error, user,location,auth };
 }
 
 export default reduxForm({

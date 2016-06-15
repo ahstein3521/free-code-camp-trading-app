@@ -6,33 +6,37 @@ import SearchBar from './search_form'
 import AlbumSelected from './album_selected_view'
 import AlbumLibrary from './album_library'
 import Requests from './request';
+import _ from 'lodash';
 
+function updateList(currentList,index){
+  let i=_.findIndex(currentList,(v)=>{return v==index});
+  return [...currentList.slice(0,i),...currentList.slice(i+1)]
+}
  
  class Profile extends Component {  
   constructor(props){
-    super(props);
-  
-    this.User=this.props.user?this.props.user.name:null;
-    this.Sent=this.props.user?this.props.user.request_sent:[];
-    this.Received=this.props.user?this.props.user.request_received:[];
-  
+    super(props);  
     this.state={requestView:null,label:'Albums'}
   }
   
   cancelRequest(a,isUser){
-    const request_sent=this.Sent.filter((v)=>{return v!=a})
-    const request_received=this.Received.filter((v)=>{return v!=a})//remove on client
-     
+    const sent=updateList(this.props.sent,a);
+    const received=updateList(this.props.received,a)//remove on client
+    let user=this.props.auth.user;
+
+    user.user.request_received=received;
+    user.user.request_sent=sent 
+
      if(isUser){
-      //remove on server-user cancels their own sent request
-      return this.props.cancelRequest(this.User,a.offer.owner,a,{request_received,request_sent})
+      //user cancels their own sent request
+      return this.props.cancelRequest(this.props.name,a.offer.owner,a,user)
      }
-     //remove on server-user cancels a received request
-    return this.props.cancelRequest(a.trade.owner,this.User,a,{request_received,request_sent})
+     //user cancels a received request
+    return this.props.cancelRequest(a.trade.owner,this.props.name,a,user)
   }
   
   confirmRequest(a){
-    this.props.confirmRequest(this.User,a.trade.owner,a.offer.album,a.trade.album);
+    this.props.confirmRequest(this.props.name, a.trade.owner,a.offer.album,a.trade.album);
     this.cancelRequest(a) //clear DB of this pending trade
   }
   
@@ -43,20 +47,20 @@ import Requests from './request';
   }
   
   renderSentRequests(){
-    return <Requests albums={this.props.user.request_sent} 
+    return <Requests albums={this.props.sent} 
               onSelectAlbum={(a,b,c)=>{this.selectNewAlbum(a,b,c)}}
               onCancel={(a)=>this.cancelRequest(a,true)}/>
   }
   
   renderReceivedRequests(){
-    return <Requests albums={this.Received} 
+    return <Requests albums={this.props.received} 
               onSelectAlbum={(a,b,c)=>{this.selectNewAlbum(a,b,c)}}
                    onCancel={(a)=>{this.cancelRequest(a,null)}}
                   onConfirm={(a)=>{this.confirmRequest(a)}}/> 
   }
   
   renderUserLibrary(){
-      const List=this.props.albums.filter((v)=>{return v.owner==this.User})
+      const List=this.props.albums.filter((v)=>{return v.owner==this.props.name})
       return <AlbumLibrary albums={List} onAlbumSelect={(a,b,c)=>{this.selectNewAlbum(a,b,c)}}/>
   }
   
@@ -87,8 +91,12 @@ import Requests from './request';
     );
   }
 }
-function mapStateToProps({albums,selected,user,search_results}){
- return {albums,selected,user,search_results} 
+function mapStateToProps({albums,selected,auth,search_results}){
+  const user=auth.user?auth.user.user:null;
+  let sent=user? user.request_sent:null;
+  let received=user? user.request_received:null;
+  let name= user? user.name:null;
+ return {albums,selected,search_results,sent,received,name,auth} 
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(actions, dispatch);

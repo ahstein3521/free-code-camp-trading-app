@@ -28,9 +28,10 @@ import AlbumLibrary from './album_library'
   }
 }
 
-function mapStateToProps({albums,selected,auth,user}){
-  return {albums,selected,auth,user}
+function mapStateToProps({albums}){  
+  return {albums}
 }
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(actions, dispatch);
 }

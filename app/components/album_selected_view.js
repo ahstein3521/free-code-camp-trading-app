@@ -13,7 +13,7 @@ import _ from 'lodash';
   }
 
   addAlbum(a){
-    this.props.addNewAlbum({...this.props.selected.current,owner:this.props.user.name})
+    this.props.addNewAlbum({...this.props.selected.current,owner:this.props.user})
     this.props.unselectAlbum();
   }  
   
@@ -21,16 +21,16 @@ import _ from 'lodash';
     const album=a.album;
     const index=_.findIndex(this.props.albums, (v)=>{return v.album==album})
     this.props.deleteAlbum(album,index);
-     this.props.unselectAlbum();
+    this.props.unselectAlbum();
   }
   
   findTrade(album){
     this.props.unselectAlbum();
     
-    if(!this.props.user){
+    if(!this.props.authenticated){
       return alert('You need to be logged in before you can make trades.')
     }
-    else if(this.props.user.name==album.owner){
+    else if(this.props.user==album.owner){
       return alert("You can't make trades with yourself, Sybil..")
     }
 
@@ -40,9 +40,11 @@ import _ from 'lodash';
   makeTradeRequest(a,b,c,d){
     const album=this.state.albumPicked;
     const trade={album:a,artist:b,image:c,owner:d}
-    const appendList=this.props.user.request_sent.concat({offer:album,trade})
-  
-     this.props.sendRequest(this.props.user.name,album.owner,album,trade,{request_sent:appendList})
+    const appendList=this.props.sent.concat({offer:album,trade})
+    const user=this.props.auth.user;
+    user.user.sent=appendList;
+
+     this.props.sendRequest(this.props.user ,album.owner,album,trade,user)
      this.props.unselectAlbum();
      this.setState({userLib:false})
   }
@@ -50,7 +52,7 @@ import _ from 'lodash';
   
   renderUserLib(){
     if(this.state.userLib){
-      const Lib=this.props.albums.filter((v)=>{return v.owner==this.props.user.name})
+      const Lib=this.props.albums.filter((v)=>{return v.owner==this.props.user})
     
       return <div className='lb2'>
               <h2>Select An Album To Trade</h2>
@@ -83,10 +85,12 @@ import _ from 'lodash';
   }
 }
 
-function mapStateToProps({selected,user,albums}){
-
-
-  return {selected,user,albums}
+function mapStateToProps({selected,albums,auth}){
+  let authenticated=auth.authenticated;
+  let u=auth.user? auth.user.user:null;
+  let user=u?u.name:null;
+  let sent=u?u.request_sent:null;
+  return {selected,authenticated,user,albums,sent,auth}
   
 }
 

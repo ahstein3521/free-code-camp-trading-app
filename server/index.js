@@ -5,8 +5,9 @@ var mongoose = require('mongoose');
 var app=require('express')();
 var session=require('express-session');
 
-// DB Setup
-mongoose.connect('mongodb://localhost:records/records');
+// require('./secret')
+
+mongoose.connect(process.env.MONGO_URI);
 
 app.use(cors());
 app.use(bodyParser.json({ type: '*/*' }));

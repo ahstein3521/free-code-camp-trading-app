@@ -30,7 +30,7 @@ class Nav extends Component{
 	}
 	renderLinks(){
 		if(this.props.auth.authenticated){
-			return <Link to="/profile"><h4>{this.props.user ? this.props.user.displayName+"'s profile":''}</h4></Link>
+			return <Link to="/profile"><h4>{this.props.auth.user.user.displayName+"'s profile"}</h4></Link>
 		}else{
 			return <Link to="/"><h4>Home</h4></Link> 
 		}
@@ -51,8 +51,8 @@ class Nav extends Component{
 }
 
 function mapStateToProps(state){
-
-  return {auth:state.auth,user:state.user}
+	
+  return {auth:state.auth}
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(actions, dispatch);

@@ -7,7 +7,7 @@ const AlbumSelect = (props) => {
   const current=props.selected.current
     return(
       <div> 
-        <div className='lightbox-frame'></div>  
+        <div className='lightbox-frame' onClick={()=>props.onCancel()}></div>  
           <div className="selected-album row">
             <button onClick={()=>props.onCancel()} className="close-btn" >X</button>
               <div className='col-md-4'> 

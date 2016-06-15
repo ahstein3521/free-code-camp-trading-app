@@ -11,7 +11,6 @@ const rootReducer = combineReducers({
 	search_results:searchReducer,
 		  selected,
 		  form,
-		  user,
 		  auth
 });
 

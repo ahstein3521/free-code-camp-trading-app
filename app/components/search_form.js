@@ -20,7 +20,7 @@ import Album from './album_selected'
   handleOnSubmit(e){
     e.preventDefault();
     this.props.findAlbum(this.state.term);
-    this.setState({term:''})
+    
   }
 
   renderResults(){
@@ -44,6 +44,7 @@ import Album from './album_selected'
             type='text'
             placeholder="Search For Albums By Title..."
             className="form-control"
+            onChange={this.handleOnChange}
             value={this.state.term}/>
           </div>
           <input type="submit" className="btn btn-secondary" value='search'/>       
