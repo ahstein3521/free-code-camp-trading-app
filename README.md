@@ -1,6 +1,5 @@
 # free-code-camp-trading-app
 
-# free-code-camp-voting-app
 #####Note for the FCC instructors:
 A great portion of this code comes directly from Stephen Grider's redux course on Udemy: 
 ###### https://www.udemy.com/react-redux-tutorial/learn/v4/content 
